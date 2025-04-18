@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# --- Título Dinámico --- #}
+    <title>{% if form.instance.pk %}Editar Producto{% else %}Crear Producto{% endif %}</title>
+    {# --- Asegúrate que las rutas a tu CSS/JS sean correctas --- #}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}"> {# Si aún usas esto #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body class="bg-gray-200 dark:bg-gray-400">
+
+{# Incluye la navbar #}
+{% include 'navbar.html' %}
+
+<div class="container-all mx-auto mb-4">
+    <section class="mt-24 mb-5">
+        {# Card contenedora principal de la página #}
+        <div class="sombra-uniforme bg-white dark:bg-gray-700 pt-1 p-2 sm:flex items-center justify-center max-w-screen-xl rounded-2xl mx-6 md:p-8 shadow-lg">
+            {# Card interna para el formulario, centrada #}
+            <div class="max-w-2xl mt-2 mx-auto bg-gray-100 p-5 dark:bg-gray-800 rounded-2xl shadow-lg md:p-8"> 
+                {# Encabezado Dinámico #}
+                <h1 class="text-2xl md:text-3xl font-bold text-center mt-6 text-gray-800 dark:text-white mb-8">
+                    {% if form.instance.pk %}
+                        Editando Producto: {{ form.instance.titulo|default:"Item" }}
+                    {% else %}
+                        Crear Nuevo Producto
+                    {% endif %}
+                </h1>
+
+                {# FORMULARIO #}
+                <form method="post" action="" enctype="multipart/form-data"> {# action="" es manejado por la vista CBV/FBV #}
+                    {% csrf_token %}
+
+                    {# Errores generales del formulario #}
+                    {% if form.non_field_errors %}
+                        <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-300 rounded" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {# --- BUCLE DE CAMPOS CON IMAGEN AJUSTADA --- #}
+                    {% for field in form %}
+                        <div class="mb-5">
+                            <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                {{ field.label }} {% if field.field.required and not form.instance.pk %}
+                                <span class="text-red-500">*</span>{% endif %}
+                            </label>
+
+                            {# Lógica especial para mostrar la imagen actual SI existe #}
+                            {% if field.name == 'imagen' and form.instance and form.instance.imagen %}
+                                <div class="mb-2">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Imagen actual:</p>
+                                    <a href="{{ form.instance.imagen.url }}" target="_blank" title="Ver imagen completa">
+                                        {# --- ÚNICO CAMBIO: Estilo inline para 40x40px --- #}
+                                        <img src="{{ form.instance.imagen.url }}" alt="Imagen actual de {{ form.instance.titulo|default:'item' }}"
+                                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 5px;">
+                                        {# -------------------------------------------------- #}
+                                    </a>
+                                    {# El widget ClearableFileInput renderizará la casilla "Borrar" aquí abajo con {{ field }} #}
+                                </div>
+                            {% endif %}
+
+                            {# Renderizar el widget del campo (input, select, textarea, input file, clear checkbox...) #}
+                            {# DEBE tener clases Tailwind aplicadas desde forms.py #}
+                            {{ field }}
+
+                            {# Texto de ayuda #}
+                            {% if field.help_text %}
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ field.help_text|safe }}</p>
+                            {% endif %}
+
+                            {# Errores del campo #}
+                            {% if field.errors %}
+                                <div class="mt-1 text-red-600 dark:text-red-400 text-sm">
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {# --- FIN BUCLE DE CAMPOS --- #}
+
+                    {# Botones de Acción #}
+                    
+                    {# Botones de Acción #}
+                    <div class="mt-8 flex justify-end gap-6">
+                        <a href="{% url 'productAdmin' %}" class="py-2 px-4 bg-white hover:bg-gray-400 dark:bg-gray-900 dark:hover:bg-gray-900 text-gray-800 dark:text-white rounded-md shadow transition duration-150 ease-in-out text-sm font-medium">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="py-1 px-3 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-md shadow transition duration-150 ease-in-out text-sm">
+                            {% if form.instance.pk %}
+                                Guardar Cambios
+                            {% else %}
+                                Crear Producto
+                            {% endif %}
+                        </button>
+                    </div>
+                    
+    
+
+                </form>
+                {# FIN FORMULARIO #}
+            </div> {# Fin Card interna #}
+        </div> {# Fin Card contenedora #}
+    </section>
+</div>
+
+{# Scripts adicionales si los necesitas #}
+{# <script src="{% static 'Java/navbar.js' %}"></script> #}
+
+</body>
+</html>

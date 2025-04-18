@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="bg-gray-200 dark:bg-gray-400">
+    {% include 'navbar.html' %}
+
+    {% block content %}
+<div class="min-h-screen flex items-start justify-center mt-25">
+    <div class="sombra-uniforme bg-white dark:bg-gray-700 dark:text-white mx-6 pt-7 rounded-2xl"> {# Ancho max-w-2xl #}
+        <div class="mx-6 mt-10 py-7 "> {# Contenedor que centra el contenido y limita el ancho #}
+
+            
+            <h2 class="text-2xl font-semibold text-center mb-6 mt-5">Editar Perfil</h2>
+
+            {# Mensajes #}
+            {% if messages %}
+                <ul class="messages mb-4 list-none p-0">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="mt-7 p-2">
+            {# Formulario único que engloba ambos forms de Django #}
+            <form method="post" > 
+                {% csrf_token %}
+
+                <h3 class="text-lg font-medium mb-3 dark:text-gray-200 border-b dark:border-gray-600 pb-1">Datos de Cuenta</h3>
+                {# Renderiza campos del UserEditForm #}
+                {% for field in user_form %}
+                    <div class="mb-4">
+                        {{ field.label_tag }}
+                        {{ field }} {# Usará los widgets definidos en el form #}
+                        {% if field.errors %}
+                            <p class="text-red-500 text-xs italic mt-1">{{ field.errors|striptags }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <h3 class="text-lg font-medium mt-6 mb-3 dark:text-gray-200 border-b dark:border-gray-600 pb-1">Datos de Perfil</h3>
+                {# Renderiza campos del ProfileEditForm #}
+                {% for field in profile_form %}
+    <div class="mb-4">
+        {# Línea de depuración #}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}...{% endif %}
+    </div>
+{% endfor %}
+
+                {# Botones #}
+                <div class="flex items-center justify-end space-x-4 mt-8">
+                    <a href="{% url 'profileUser' %}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+<div class="mt-7"></div>
+    
+</body>
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-200 dark:bg-gray-400">
+
+    {% include 'navbar.html' %}
+
+{% block content %}
+{# Contenedor principal de página - AJUSTA pt y pb según necesites #}
+<div class="min-h-screen bg-white dark:bg-gray-700  mx-6 mt-25 py-5 pb-5 rounded-2xl">
+
+    {# Contenedor que centra el contenido y limita el ancho #}
+    <div class="max-w-screen-xl mx-2">
+
+        {# Estructura Flexbox para las dos columnas/tarjetas internas #}
+        <div class="md:flex md:gap-8 items-start">
+
+            {# --- COLUMNA IZQUIERDA: Tarjeta Imagen --- #}
+            <div class="md:w-1/3 mb-7 md:mb-0">
+                {# Tarjeta específica para la imagen - Usa tus clases o ajusta estas #}
+                <div class="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 text-center sombra-uniforme">
+                     <p class="text-lg font-semibold mb-4 dark:text-white">Foto de Perfil</p>
+                     {% if perfil.imagen and perfil.imagen.url %} {# Verifica si hay imagen y URL #}
+                        <img src="{{ perfil.imagen.url }}" alt="Avatar de {{ user.username }}" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-sm object-cover border-2 border-gray-300 dark:border-gray-500">
+                    {% else %}
+                        <img src="{% static 'img/default_avatar.png' %}" alt="Avatar por defecto" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-sm border-2 border-gray-300 dark:border-gray-500">
+                    {% endif %}
+                    {# Botón Placeholder #}
+                    <button disabled class="mt-4 bg-blue-100 dark:bg-gray-600 text-blue-600 dark:text-gray-300 font-semibold py-2 px-4 border border-blue-200 dark:border-gray-500 rounded shadow-sm text-sm cursor-not-allowed" title="Función no implementada">
+                        Cambiar Imagen
+                    </button>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Próximamente</p>
+                </div>
+            </div>
+
+            {# --- COLUMNA DERECHA: Tarjeta Información --- #}
+            <div class="md:w-2/3">
+                {# Tarjeta específica para la información - Usa tus clases o ajusta estas #}
+                <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-lg rounded-lg border border-gray-200 dark:border-gray-600 sombra-uniforme">
+                    {# Cabecera de la tarjeta de información #}
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                            Información de la Cuenta
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-300">
+                            Tus detalles personales y de perfil.
+                        </p>
+                    </div>
+                    {# Cuerpo de la tarjeta con lista de definición #}
+                    <div class="border-t border-gray-200 dark:border-gray-600 px-4 py-5 sm:p-0">
+                        <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-600">
+
+                            {# Nombre Completo #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nombre Completo</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ perfil.nombre_completo | default:"No proporcionado" }}</dd>
+                            </div>
+
+                            {# Nombre de Usuario #}
+                             <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nombre de Usuario</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ user.username }}</dd>
+                            </div>
+
+                            {# Correo Electrónico #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Correo Electrónico</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ user.email }}</dd>
+                            </div>
+
+                             {# Rol #}
+                             <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Rol</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ perfil.rol.nombre | default:"No asignado" }}</dd>
+                            </div>
+
+                            {# Número de Teléfono #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Teléfono</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ perfil.telefono | default:"No proporcionado" }}</dd>
+                            </div>
+
+                             {# Fecha de Nacimiento #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Fecha de Nacimiento</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{% if perfil.fecha_nacimiento %}{{ perfil.fecha_nacimiento|date:"d/m/Y" }}{% else %}No proporcionada{% endif %}</dd>
+                            </div>
+
+                            {# Dirección #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Dirección</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ perfil.direccion | default:"No proporcionada" | linebreaksbr }}</dd>
+                            </div>
+
+                            {# Comentarios #}
+                             <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Comentarios</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ perfil.comentarios | default:"-" | linebreaksbr }}</dd>
+                            </div>
+
+                            {# Miembro Desde #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Miembro Desde</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ user.date_joined|date:"d/m/Y" }}</dd>
+                            </div>
+
+                            {# Acciones #}
+                            <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Acciones</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2 flex items-center space-x-4">
+                                    {# ^ Añadido flex y space-x para separar botones #}
+
+                                    {# Botón Cambiar Contraseña (Placeholder) #}
+                                    <button disabled class="bg-gray-300 dark:bg-gray-500 text-gray-600 dark:text-gray-200 font-bold py-1 px-3 rounded text-xs cursor-not-allowed" title="Función no implementada">
+                                        Cambiar Contraseña
+                                    </button>
+
+                                    {# --- BOTÓN/ENLACE PARA EDITAR DATOS --- #}
+                                    {# Asegúrate que 'edit_profile' es el name= de tu URL en urls.py que apunta a la vista editar_perfil #}
+                                    <a href="{% url 'editPerfil' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs focus:outline-none focus:shadow-outline">
+                                        Editar Datos
+                                    </a>
+                                    {# --- FIN BOTÓN/ENLACE --- #}
+
+                                </dd>
+                            </div>
+
+                        </dl>
+                    </div> {# Fin del cuerpo de la tarjeta de info #}
+                </div> {# Fin de la tarjeta de info #}
+            </div> {# Fin Columna Derecha #}
+        </div> {# Fin Flexbox/Grid Interno #}
+    </div> {# Fin Tarjeta Principal Externa #}
+</div> {# Fin Contenedor Página #}
+<div class="h-2"></div>
+
+{% endblock content %}
+
+
+<script src="{% static 'Java/navbar.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>  
+</body>
+</html>

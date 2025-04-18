@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>inicio</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body class="bg-gray-200 dark:bg-gray-400">
+    {% include 'navbar.html' %}
+
+    <div class="container-all mx-auto mb-4">
+        
+        <section class=" mt-24 mb-5">
+          <div class="sombra-uniforme bg-white dark:bg-gray-700 pt-1 sm:flex items-center max-w-screen-xl rounded-2xl mx-6 ">
+            <div class="p-10">
+              <div class="image object-center text-center">
+                <img src="{% static 'img/istockphoto-903309398-612x612.jpg' %} " />
+              </div>
+            </div>
+            <div class="p-2">
+              <div class="text">
+                <span class="text-gray-500 border-b-2 border-indigo-600 uppercase">Sobre nosotros</span>
+                <h2 class="my-4 font-bold text-3xl sm:text-4xl">
+                  Visita <span class="text-indigo-600">nuestras casas personalizadas</span>
+                </h2>
+                <p class="text-gray-700 dark:text-white">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
+                  commodi doloremque, fugiat illum magni minus nisi nulla numquam
+                  obcaecati placeat quia, repellat tempore voluptatum.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="vendidos-card sombra-uniforme bg-white dark:bg-gray-700 mx-6 rounded-2xl">
+            <div class="p-5">
+                <div class="text-center dark:text-white text-3xl mt-8 mb-8">
+                    <a href="#">
+                        <h2>Productos más vendidos</h2>
+                    </a>
+                </div>
+                <div id="vendido-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+                    {% for vendido in vendidos %}
+                        <div class="vendido-card relative p-4 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-md"
+                             data-titulo="{{ vendido.titulo }}"
+                             data-precio="{{ vendido.precio }}">
+                            <div class="absolute top-0 right-0 mt-2 mr-2 p-4 z-20 flex justify-between">
+                                <div class="inline-flex items-center justify-center w-8 h-8 p-2 rounded-full bg-white dark:bg-gray-900 shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-auto fill-current text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="relative block h-70">
+                                                            <div class="h-45 mx-1 bg-gray-100 dark:bg-gray-700 rounded-lg" 
+                                style="{% if vendido.imagen %}background-image: url('{{ vendido.imagen.url }}'); background-size: cover;{% endif %}">
+                            </div>
+                            </div>
+                            <h2 class="mt-2 text-gray-800 dark:text-white text-sm font-semibold line-clamp-1">{{ vendido.titulo }}</h2>
+                            <p class="mt-2 text-gray-800 dark:text-white text-sm">{{ vendido.precio }}</p>
+                            <div class="flex justify-end mt-4 space-x-2">
+                                <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">Cotizar</button>
+                                <button class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-md">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        
+    
+<section class="mt-5 mb-5">
+    <div class="max-w-screen-xl rounded-2xl mx-6">
+        <div class="">
+            <div class="dark:text-white text-3xl font-medium text-center mt-8 mb-8">
+                <a href="">
+                    <h2>Productos más solicitados</h2>
+                </a>
+            </div>
+            <div class="dark:text-white text-center">
+                <h4>Revisa nuestros productos más solicitados, con la mejor calidad y servicio</h4>
+            </div>
+        </div>
+        <div class="mt-12 mb-8">
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for producto in productos %}
+                    <div class="product-card sombra-uniforme bg-white dark:bg-gray-700 flex flex-col justify-between m-2 border-gray-2 rounded-lg"
+                         data-titulo="{{ producto.titulo }}"
+                         data-precio="{{ producto.precio }}"
+                         data-comentarios="{{ producto.comentarios }}">
+                        <div class="max-h-50 overflow-hidden flex justify-center rounded-2xl items-center mt-2 mb-2 p-2" >
+                            
+                                    <div>
+                                        {# Otros campos del producto #}
+                                        {% if producto.imagen %}
+                                            <img src="{{ producto.imagen.url }}" alt="{{ producto.titulo }}" class="max-w-[90%] max-h-[90%] rounded-lg">
+                                        {% else %}
+                                            <p>No hay imagen disponible.</p>
+                                        {% endif %}
+                                    </div>
+                               
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-gray-800 dark:text-white font-semibold mb-1">{{ producto.titulo }}</h2>
+                            <div class="flex items-center justify-between">
+                                <p class="text-gray-800 dark:text-white text-sm">{{ producto.precio }}</p>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L4.489 8.13l6.57-1.01L10 1l2.941 6.12 6.57 1.01-4.764 4.415L15.878 18.1 10 15z" />
+                                    </svg>
+                                    <p class="ml-1 text-gray-600 dark:text-white text-xs">({{ producto.comentarios }})</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div></section>
+    </div>
+    <footer class="mt-5 mb-5 dark:text-white">
+      <div class="sombra-uniforme max-w-screen-xl rounded-2xl mx-6 bg-white dark:bg-gray-700 py-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class=" text-center md:text-left">
+                  <a href="#" class="flex items-center justify-center md:justify-start">
+                      <img src="{% static 'img/pngegg (1).png' %} " alt="Logo empresa" class="max-w-14 max-h-14 mr-2">
+                      <span class="text-xl font-semibold">Tu Empresa</span>
+                  </a>
+                  <p class="mt-5 text-sm pl-2 text-gray-600 dark:text-white">Información sobre la empresa, ubicación, etc.</p>
+              </div>
+  
+              <div class="text-center  md:text-left">
+                  <h4 class="text-lg font-semibold mb-4">Enlaces Útiles</h4>
+                  <ul class="space-y-2">
+                      <li><a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Inicio</a></li>
+                      <li><a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Servicios</a></li>
+                      <li><a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Acerca de</a></li>
+                      <li><a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Intranet</a></li>
+                  </ul>
+              </div>
+  
+              <div class="text-center md:text-left">
+                  <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                  <p class="text-sm dark:text-white text-gray-600">Dirección: Calle Principal #123</p>
+                  <p class="text-sm dark:text-white text-gray-600">Teléfono: (+569) 999999999</p>
+                  <p class="text-sm dark:text-white  text-gray-600">Email: info@empresa.com</p>
+              </div>
+  
+              <div class="text-center  md:text-left">
+                  <h4 class="text-lg font-semibold mb-4">Redes Sociales</h4>
+                  <div class="flex justify-center md:justify-start space-x-4">
+                      <a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Facebook</a>
+                      <a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Twitter</a>
+                      <a href="#" class="text-gray-700 dark:text-white hover:text-blue-500">Instagram</a>
+                  </div>
+              </div>
+          </div>
+          <div class="text-center mt-8 pt-8 border-t dark:text-white border-gray-300 text-sm text-gray-600">
+              <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+          </div>
+      </div>
+    </footer>
+  <script src="{% static 'Java/navbar.js' %}"></script>
+  <script src="{% static 'Java/productos.js' %}"></script>
+  <script src="{% static 'Java/masVendidos.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>
+

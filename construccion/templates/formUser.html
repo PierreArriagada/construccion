@@ -1,0 +1,178 @@
+
+{% load static %} 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formulario</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body class="bg-gray-200 dark:bg-gray-400">
+    {% include 'navbar.html' %}  {# Incluye el navbar #}
+
+        {% block content %}
+        <section class="sombra-uniforme  bg-white dark:bg-gray-700 mt-25 mx-6 pb-20 pt-20 rounded-2xl">
+            <div class="p-5 mx-6 pt-20 pb-10 ">
+                <div class=" bg-gray-100 dark:bg-gray-800 rounded-2xl mx-auto " style="max-width: 600px;">
+                    <div class="text-center text-2xl text-front-bold text-blue-500 dark:text-white pt-5">
+                        <p> Crear nuevo usuario</p>
+                    </div>
+                    <div class="p-5 mt-3 ">
+                        {# --- Mostrar Mensajes de Django (éxito/error generales) --- #}
+                        {# Este bloque se muestra siempre que haya mensajes, antes del if/else #}
+                        {% if messages %}
+                            <ul class="messages mb-4 list-none p-0">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
+                                        {{ message }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+        
+                        {# --- INICIO DE LA LÓGICA CONDICIONAL --- #}
+                        {% if registro_exitoso %}
+        
+                            {# SI EL REGISTRO FUE EXITOSO: Muestra solo el botón Aceptar #}
+                            <div class="text-center p-4">
+                                {# El mensaje de éxito ya se mostró arriba con el framework de messages #}
+                                <a href="{% url 'loginUser' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    Aceptar (Ir a Iniciar Sesión)
+                                </a>
+                            </div>
+        
+                        {% else %}
+        
+                            {# SI NO FUE EXITOSO (o es la primera carga): Muestra el formulario #}
+                            <form method="post" action="{% url 'formUser' %}" id="registrationForm">
+                                {% csrf_token %}
+        
+                                {# Errores generales del formulario #}
+                                {% if form.non_field_errors %}
+                                    <div class="mb-4 p-2 rounded bg-red-100 text-red-700 text-sm">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                {% endif %}
+        
+                            {# Nombre Completo #}
+                            <div class="mb-4">
+                                <label for="{{ form.nombre_completo.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2"> {# Clases correctas para label #}
+                                    {{ form.nombre_completo.label }}:
+                                </label>
+                                {{ form.nombre_completo }} {# Input renderizado por Django #}
+                                {% if form.nombre_completo.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.nombre_completo.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Nombre de Usuario #}
+                            <div class="mb-4">
+                                <label for="{{ form.nombre_usuario.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2"> {# Clases correctas para label #}
+                                     {{ form.nombre_usuario.label }}:
+                                </label>
+                                {{ form.nombre_usuario }}
+                                {% if form.nombre_usuario.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.nombre_usuario.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Correo Electrónico #}
+                            <div class="mb-4">
+                                 <label for="{{ form.correo_electronico.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.correo_electronico.label }}:</label>
+                                 {{ form.correo_electronico }}
+                                 {% if form.correo_electronico.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.correo_electronico.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Contraseña #}
+                            <div class="mb-4">
+                                 <label for="{{ form.contrasena.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.contrasena.label }}:</label>
+                                 {{ form.contrasena }}
+                                 {% if form.contrasena.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.contrasena.errors|join:", " }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Repetir Contraseña #}
+                             <div class="mb-4">
+                                 <label for="{{ form.repetir_contrasena.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.repetir_contrasena.label }}:</label>
+                                 {{ form.repetir_contrasena }}
+                                 {% if form.repetir_contrasena.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.repetir_contrasena.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Número de Teléfono #}
+                            <div class="mb-4">
+                                 <label for="{{ form.numero_telefono.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.numero_telefono.label }}:</label>
+                                 {{ form.numero_telefono }}
+                                 {% if form.numero_telefono.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.numero_telefono.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Fecha de Nacimiento #}
+                            <div class="mb-4">
+                                 <label for="{{ form.fecha_nacimiento.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.fecha_nacimiento.label }}:</label>
+                                 {{ form.fecha_nacimiento }}
+                                 {% if form.fecha_nacimiento.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ form.fecha_nacimiento.errors|striptags }}</p>
+                                {% endif %}
+                            </div>
+        
+                            {# Dirección #}
+                            <div class="mb-4">
+                                  <label for="{{ form.direccion.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.direccion.label }}:</label>
+                                  {{ form.direccion }}
+                                  {% if form.direccion.errors %}
+                                      <p class="text-red-500 text-xs italic mt-1">{{ form.direccion.errors|striptags }}</p>
+                                  {% endif %}
+                            </div>
+        
+                            {# Rol #}
+                            <div class="mb-4">
+                                  <label for="{{ form.rol.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.rol.label }}:</label>
+                                  {{ form.rol }} {# Renderiza el <select> #}
+                                  {% if form.rol.errors %}
+                                      <p class="text-red-500 text-xs italic mt-1">{{ form.rol.errors|striptags }}</p>
+                                  {% endif %}
+                            </div>
+        
+                            {# Comentarios #}
+                            <div class="mb-6">
+                                  <label for="{{ form.comentarios.id_for_label }}" class="block dark:text-white text-gray-700 text-sm font-bold mb-2">{{ form.comentarios.label }}:</label>
+                                  {{ form.comentarios }} {# Renderiza <textarea> #}
+                                  {% if form.comentarios.errors %}
+                                      <p class="text-red-500 text-xs italic mt-1">{{ form.comentarios.errors|striptags }}</p>
+                                  {% endif %}
+                            </div>
+        
+                            {# Botón de Envío del Formulario #}
+                        <div class="flex items-center justify-center">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                Registrarse
+                            </button>
+                        </div>
+        
+                        {% endif %}
+        
+                        {# --- FIN DE LA LÓGICA CONDICIONAL --- #}
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+           <div class="mt-2"></div>
+{# Incluye jQuery y tu script si aún lo necesitas para validación en tiempo real #}
+{# Asegúrate de usar la etiqueta static #}
+
+<script src="{% static 'Java/navbar.js' %}"></script>  
+<script src="{% static 'Java/valUsuarios.js' %}"></script> 
+{% endblock content %}
+
+</body>
+</html>

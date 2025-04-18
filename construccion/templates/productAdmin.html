@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Productos</title> {# Título ajustado #}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"> {# Tu CSS de Tailwind #}
+    <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}"> {# CSS de sombra uniforme #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> {# jQuery para funciones #}
+    <style>
+        /* --- Estilos básicos para TABLA y BOTONES (como preferiste antes) --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: auto; /* Para que se ajuste al contenido */
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Borde gris claro */
+            padding: 8px 12px;      /* Padding */
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f7fafc; /* Fondo muy claro */
+        }
+        .a-button {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        .a-button.blue {
+            background-color: #4CAF50; /* Verde */
+        }
+        .a-button.red {
+            background-color: #f44336; /* Rojo */
+        }
+        /* Botones dentro de la tabla más pequeños */
+        td .a-button {
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+         /* Alineación vertical en celdas con imágenes */
+         td:has(img) {
+            vertical-align: top;
+         }
+    </style>
+</head>
+
+<body class="bg-gray-200 dark:bg-gray-400"> 
+
+    {% include 'navbar.html' %}
+
+    <div class="container-all mx-auto mb-4">
+
+        <section class="mt-24 mb-5">
+            <div class="sombra-uniforme bg-white dark:bg-gray-700 pt-1 sm:flex items-center justify-between max-w-screen-xl rounded-2xl mx-6 p-6 md:p-8 shadow-lg">
+                <div class="p-6 md:p-10 text-center sm:text-left">
+                    <div class="flex flex-row p-5 gap-6 justify-end">
+                        <a href="{% url 'producto_create' %}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 py-2 px-5 rounded-full shadow transition duration-150 ease-in-out">
+                            Agregar Producto
+                        </a>
+                        <a href="{% url 'vendido_create' %}" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold p-2 py-2 px-5 rounded-full shadow transition duration-150 ease-in-out">
+                            Agregar Vendido
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        {# --- Sección Productos Mas Vendidos (CON TABLA DE VENDIDOS) --- #}
+        <section class="sombra-uniforme bg-white dark:bg-gray-700 mx-6 rounded-2xl mb-5">
+            <div class="p-5">
+                <div class="text-center dark:text-white text-3xl mt-8 mb-8">
+                    <a href=""> {# Considera añadir un enlace real aquí si es necesario #}
+                        <h2 class="font-semibold text-gray-800 dark:text-white">Productos mas vendidos</h2>
+                    </a>
+                </div>
+
+                {# --- TABLA DE VENDIDOS INSERTADA AQUÍ --- #}
+                <div class="overflow-x-auto">
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Título</th>
+                                 <th>Precio</th>
+                                 <th>Imagen</th>
+                                 <th>Comentarios</th>
+                                 <th>Acciones</th> {# Mantenemos acciones por si las necesitas aquí #}
+                             </tr>
+                         </thead>
+                         <tbody>
+                             {% for vendido in vendidos %}
+                             <tr>
+                                 <td class="dark:text-gray-300">{{ vendido.titulo }}</td>
+                                 <td class="dark:text-gray-300">{{ vendido.precio }}</td>
+                                 <td>
+                                     {% if vendido.imagen %}
+                                     <img src="{{ vendido.imagen.url }}" alt="{{ vendido.titulo }}"
+                                          style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; display: block;"> {# <-- Imagen 40x40 #}
+                                     {% else %}
+                                      <span class="text-xs italic dark:text-gray-400">Sin imagen</span>
+                                     {% endif %}
+                                 </td>
+                                 <td class="dark:text-gray-300">{{ vendido.comentarios|default:"-" }}</td>
+                                 <td class="whitespace-nowrap">
+                                     {# Botones de acción - considera si son necesarios en esta página #}
+                                     <a href="{% url 'vendido_update' vendido.pk %}" class="a-button blue">Editar</a>
+                                     <a href="#" class="a-button red" onclick="event.preventDefault(); eliminarVendido('{% url 'vendidos_delete' vendido.pk %}');">Eliminar</a>
+                                 </td>
+                             </tr>
+                              {% empty %}
+                             <tr>
+                                 <td colspan="5" class="text-center text-gray-500 dark:text-gray-400 py-4">No hay vendidos registrados.</td>
+                             </tr>
+                             {% endfor %}
+                         </tbody>
+                     </table>
+                </div>
+                {# --- FIN TABLA DE VENDIDOS --- #}
+
+            </div>
+        </section>
+
+        {# --- Sección Productos Más Solicitados (CON TABLA DE PRODUCTOS) --- #}
+        <section class="sombra-uniforme bg-white dark:bg-gray-700 mt-5 mb-5 mx-6 rounded-2xl"> {# Añadido fondo y sombra similar #}
+             <div class="p-5"> {# Añadido padding #}
+                 <div class="">
+                     <div class="dark:text-white text-3xl font-semibold text-center mt-8 mb-4 text-gray-800"> {# Ajustado font y color #}
+                         <h2>Productos más solicitados</h2>
+                     </div>
+                     <div class="dark:text-gray-300 text-center text-gray-600 mb-8"> {# Ajustado color #}
+                         <h4>Revisa nuestros productos más solicitados, con la mejor calidad y servicio</h4>
+                     </div>
+                 </div>
+                 {# --- TABLA DE PRODUCTOS INSERTADA AQUÍ --- #}
+                 <div class="overflow-x-auto">
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Título</th>
+                                 <th>Precio</th>
+                                 <th>Imagen</th>
+                                 <th>Comentarios</th>
+                                 <th>Acciones</th> {# Mantenemos acciones por si las necesitas aquí #}
+                             </tr>
+                         </thead>
+                         <tbody>
+                             {% for producto in productos %}
+                             <tr>
+                                 <td class="dark:text-gray-300">{{ producto.titulo }}</td>
+                                 <td class="dark:text-gray-300">{{ producto.precio }}</td>
+                                 <td>
+                                     {% if producto.imagen %}
+                                     <img src="{{ producto.imagen.url }}" alt="{{ producto.titulo }}"
+                                          style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; display: block;"> {# <-- Imagen 40x40 #}
+                                     {% else %}
+                                     <span class="text-xs italic dark:text-gray-400">Sin imagen</span>
+                                     {% endif %}
+                                 </td>
+                                 <td class="dark:text-gray-300">{{ producto.comentarios|default:"-" }}</td>
+                                 <td class="whitespace-nowrap">
+                                      {# Botones de acción - considera si son necesarios en esta página #}
+                                     <a href="{% url 'producto_update' producto.pk %}" class="a-button blue">Editar</a>
+                                     <a href="#" class="a-button red" onclick="event.preventDefault(); eliminarProducto('{% url 'producto_delete' producto.pk %}');">Eliminar</a>
+                                 </td>
+                             </tr>
+                             {% empty %}
+                             <tr>
+                                 <td colspan="5" class="text-center text-gray-500 dark:text-gray-400 py-4">No hay productos registrados.</td>
+                             </tr>
+                             {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+                 {# --- FIN TABLA DE PRODUCTOS --- #}
+             </div>
+        </section>
+
+    </div> {# Fin container-all #}
+
+    {# Script Original Inline con CSRF de Template #}
+    <script>
+        function eliminarProducto(url) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        // Este método para CSRF solo funciona si el script está inline
+                        // y requiere que el token esté disponible en el contexto de la plantilla
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => { // Añadido parámetro response
+                    if (response.ok) {
+                        window.location.reload(); // Recarga si la respuesta es OK
+                    } else {
+                         alert('Error al eliminar el producto. Código: ' + response.status); // Muestra error
+                    }
+                }).catch(error => {
+                     console.error('Error en fetch:', error);
+                     alert('Error de red al intentar eliminar.');
+                });
+            }
+        }
+
+        function eliminarVendido(url) {
+            if (confirm('¿Estás seguro de que quieres eliminar este vendido?')) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => { // Añadido parámetro response
+                     if (response.ok) {
+                        window.location.reload(); // Recarga si la respuesta es OK
+                    } else {
+                        alert('Error al eliminar el vendido. Código: ' + response.status); // Muestra error
+                    }
+                }).catch(error => {
+                     console.error('Error en fetch:', error);
+                     alert('Error de red al intentar eliminar.');
+                });
+            }
+        }
+    </script>
+     {# <script src="{% static 'Java/navbar.js' %}"></script> #}
+</body>
+</html>
