@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-200 dark:bg-gray-400">
     {% include 'navbar.html' %}
@@ -13,10 +14,10 @@
     {% block content %}
 <div class="min-h-screen flex items-start justify-center mt-25">
     <div class="sombra-uniforme bg-white dark:bg-gray-700 dark:text-white mx-6 pt-7 rounded-2xl"> {# Ancho max-w-2xl #}
-        <div class="mx-6 mt-10 py-7 "> {# Contenedor que centra el contenido y limita el ancho #}
+        <div class="mx-6 mt-2 py-2 "> {# Contenedor que centra el contenido y limita el ancho #}
 
             
-            <h2 class="text-2xl font-semibold text-center mb-6 mt-5">Editar Perfil</h2>
+            <h2 class="text-2xl font-semibold text-center mb-2">Editar Perfil</h2>
 
             {# Mensajes #}
             {% if messages %}
@@ -34,7 +35,7 @@
                 {% csrf_token %}
 
                 <h3 class="text-lg font-medium mb-3 dark:text-gray-200 border-b dark:border-gray-600 pb-1">Datos de Cuenta</h3>
-                {# Renderiza campos del UserEditForm #}
+            
                 {% for field in user_form %}
                     <div class="mb-4">
                         {{ field.label_tag }}

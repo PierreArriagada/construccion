@@ -501,3 +501,5 @@ def producto_create(request):
     else:
         form = ProductoForm()
     return render(request, 'DOM/producto_form.html', {'form': form})
+
+

@@ -9,30 +9,30 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
   <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-200 dark:bg-gray-400">
     {% include 'navbar.html' %}  {# Incluye el navbar #}
+    {# --- Mostrar Mensajes --- #}
+    {% if messages %}
+        <ul class="messages mb-4 list-none p-0">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
         {% block content %}
-        <section class="sombra-uniforme  bg-white dark:bg-gray-700 mt-25 mx-6 pb-20 pt-20 rounded-2xl">
-            <div class="p-5 mx-6 pt-20 pb-10 ">
+        <section class="sombra-uniforme  bg-white dark:bg-gray-700 mt-25 mx-6 pb-3 pt-3 rounded-2xl">
+            <div class="">
                 <div class=" bg-gray-100 dark:bg-gray-800 rounded-2xl mx-auto " style="max-width: 600px;">
-                    <div class="text-center text-2xl text-front-bold text-blue-500 dark:text-white pt-5">
+                    <div class="text-center text-2xl text-front-bold text-blue-500 dark:text-white pt-2">
                         <p> Crear nuevo usuario</p>
                     </div>
                     <div class="p-5 mt-3 ">
-                        {# --- Mostrar Mensajes de Django (éxito/error generales) --- #}
-                        {# Este bloque se muestra siempre que haya mensajes, antes del if/else #}
-                        {% if messages %}
-                            <ul class="messages mb-4 list-none p-0">
-                                {% for message in messages %}
-                                    <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
-                                        {{ message }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-        
+                      
                         {# --- INICIO DE LA LÓGICA CONDICIONAL --- #}
                         {% if registro_exitoso %}
         

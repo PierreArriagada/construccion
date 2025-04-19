@@ -24,6 +24,7 @@ urlpatterns = [
     path('forgotPass/', views.forgotPass, name='forgotPass'),
     path('resetPass/', views.resetPassForm, name='resetPass'), # URL para el formulario de nueva contraseña
     path('', include('construccion.urls')), # Incluye construccion.urls aquí
+    
 ]
 
 if settings.DEBUG:

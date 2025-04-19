@@ -13,8 +13,28 @@
 
     {% include 'navbar.html' %}
 
+    <div id="toast-container" class="fixed mt-1 right-4 space-y-4 z-50">
+        {% for message in messages %}
+            <div 
+                class="toast-message max-w-xs w-full
+                       p-4 rounded-xl shadow-lg transition-opacity duration-500
+                       text-sm font-medium
+                       {% if 'error' in message.tags %}
+                           bg-gray-100 text-red-700 dark:bg-black dark:text-red-300
+                       {% elif 'success' in message.tags %}
+                           bg-gray-100 text-green-700 dark:bg-black dark:text-green-300
+                       {% else %}
+                           bg-gray-100 text-blue-700 dark:bg-black dark:text-blue-300
+                       {% endif %}"
+                role="alert"
+            >
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
 {% block content %}
-{# Contenedor principal de página - AJUSTA pt y pb según necesites #}
+
 <div class="min-h-screen bg-white dark:bg-gray-700  mx-6 mt-25 py-5 pb-5 rounded-2xl">
 
     {# Contenedor que centra el contenido y limita el ancho #}
@@ -141,6 +161,18 @@
     </div> {# Fin Tarjeta Principal Externa #}
 </div> {# Fin Contenedor Página #}
 <div class="h-2"></div>
+<script>
+    // Ocultar los mensajes después de 5 segundos
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            const toasts = document.querySelectorAll('.toast-message');
+            toasts.forEach((toast) => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 500); // Espera a que termine la transición
+            });
+        }, 5000);
+    });
+</script>
 
 {% endblock content %}
 
