@@ -141,7 +141,29 @@
             </div>
         </div>
     </div>
-    </div></section>
+    </div>
+</section>
+ 
+<section class="mt-5 mb-5">
+    <div class="max-w-screen-xl rounded-2xl mx-6">
+        <div class="">
+            <div class="dark:text-white text-3xl font-medium text-center mt-8 mb-8">
+                <a href=""> <h2>Interiores</h2>
+                </a>
+            </div>
+            <div class="dark:text-white text-center">
+                 <h4>Revisa nuestro nuevos trabajos en interiores a medidas y predeterminados</h4>
+            </div>
+        </div>
+        <div class="mt-12 mb-8">
+            <div id="production-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+             <div id="loading-indicator" class="text-center dark:text-white py-4" style="display: none;">Cargando interiores...</div>
+             <div id="error-indicator" class="text-center text-red-500 py-4" style="display: none;">Error al cargar las interiores.</div>
+        </div>
+    </div>
+</section>
+
     </div>
     <footer class="mt-5 mb-5 dark:text-white">
       <div class="sombra-uniforme max-w-screen-xl rounded-2xl mx-6 bg-white dark:bg-gray-700 py-8">
@@ -195,6 +217,105 @@
                 });
             }, 5000);
         });
+        document.addEventListener('DOMContentLoaded', () => {
+        // Se busca el nuevo ID 'production-grid' y se renombra la variable
+        const productionGrid = document.getElementById('production-grid');
+        const loadingIndicator = document.getElementById('loading-indicator'); // ID no cambió
+        const errorIndicator = document.getElementById('error-indicator');     // ID no cambió
+        const apiUrl = 'http://localhost:8001/productions'; // URL ya actualizada
+
+        // Muestra el indicador de carga
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        if (errorIndicator) errorIndicator.style.display = 'none';
+        // Usa la variable renombrada productionGrid
+        productionGrid.innerHTML = '';
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(productions => {
+                // Oculta el indicador de carga
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+
+                if (productions.length === 0) {
+                     // Usa la variable renombrada productionGrid y texto actualizado
+                     productionGrid.innerHTML = '<p class="text-center dark:text-gray-400 col-span-full">No hay producciones disponibles en este momento.</p>';
+                     return;
+                }
+
+                productions.forEach(production => {
+                    // ... (creación de la tarjeta 'card' - sin cambios internos aquí) ...
+                     const card = document.createElement('div');
+                    card.className = 'product-card sombra-uniforme bg-white dark:bg-gray-700 flex flex-col justify-between m-2 border-gray-2 rounded-lg';
+
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'max-h-50 overflow-hidden flex justify-center rounded-2xl items-center mt-2 mb-2 p-2';
+
+                    const img = document.createElement('img');
+                    img.src = production.imagen_url;
+                    img.alt = production.nombre;
+                    img.className = ' items-center rounded-lg p-3';
+                    imageContainer.appendChild(img);
+
+                    const infoContainer = document.createElement('div');
+                    infoContainer.className = 'p-4';
+
+                    const title = document.createElement('h2');
+                    title.className = 'text-gray-800 dark:text-white font-semibold mb-1';
+                    title.textContent = production.nombre;
+
+                    const detailsContainer = document.createElement('div');
+                    detailsContainer.className = 'flex items-center justify-between';
+
+                    const price = document.createElement('p');
+                    price.className = 'text-gray-800 dark:text-white text-sm';
+                    price.textContent = `$ ${production.precio.toFixed(2)}`;
+
+                    const ratingContainer = document.createElement('div');
+                    ratingContainer.className = 'flex items-center';
+
+                    const starSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    starSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    starSvg.setAttribute('class', 'h-4 w-4 text-yellow-500');
+                    starSvg.setAttribute('viewBox', '0 0 20 20');
+                    starSvg.setAttribute('fill', 'currentColor');
+                    const starPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    starPath.setAttribute('d', 'M10 15l-5.878 3.09 1.123-6.545L4.489 8.13l6.57-1.01L10 1l2.941 6.12 6.57 1.01-4.764 4.415L15.878 18.1 10 15z');
+                    starSvg.appendChild(starPath);
+
+                    const comments = document.createElement('p');
+                    comments.className = 'ml-1 text-gray-600 dark:text-white text-xs';
+                    comments.textContent = `(${production.cantidad_comentarios})`;
+
+                    ratingContainer.appendChild(starSvg);
+                    ratingContainer.appendChild(comments);
+
+                    detailsContainer.appendChild(price);
+                    detailsContainer.appendChild(ratingContainer);
+
+                    infoContainer.appendChild(title);
+                    infoContainer.appendChild(detailsContainer);
+
+                    card.appendChild(imageContainer);
+                    card.appendChild(infoContainer);
+
+
+                    // Añade la tarjeta completa a la rejilla usando la variable renombrada
+                    productionGrid.appendChild(card);
+                });
+            })
+            .catch(error => {
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+                if (errorIndicator) errorIndicator.style.display = 'block';
+                console.error('Error al obtener los interioress:', error);
+                 // Usa la variable renombrada productionGrid y texto actualizado
+                productionGrid.innerHTML = `<p class="text-center text-red-500 col-span-full">No se pudieron cargar los interiores. ${error.message}</p>`;
+            });
+    });
     </script>
     </footer>
   <script src="{% static 'Java/navbar.js' %}"></script>
