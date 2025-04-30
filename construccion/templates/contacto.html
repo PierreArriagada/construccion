@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+    <link rel="stylesheet" href="{% static 'css/somUniforme.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class=" bg-gray-100 dark:bg-gray-400">
+    {% include 'navbar.html' %}
+    <div class="container mx-auto mt-10 max-w-xl px-7 py-12 pr-7 md:mx-10">
+        <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg w-full">
+          <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Contáctanos</h1>
+    
+          <form action="https://formspree.io/f/xnndjbyr" method="POST" class="space-y-6">
+    
+            <div class="">
+              <label for="fullname" class="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                Nombre Completo: <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullname"
+                name="Nombre Completo"
+                required
+                placeholder="Ej: Juan Pérez González"
+                class="w-full px-4 py-2 border dark:text-white  border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+              >
+            </div>
+    
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                Teléfono:
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="Telefono"
+                placeholder="Ej: +56 9 1234 5678"
+                class="w-full px-4 py-2 border dark:text-white border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+              >
+            </div>
+    
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                Correo Electrónico: <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="Correo Electronico"
+                required
+                placeholder="Ej: juan.perez@correo.com"
+                class="w-full px-4 py-2 border dark:text-white border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+              >
+            </div>
+    
+            <div>
+              <label for="comments" class="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                Comentarios / Consulta: <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="comments"
+                name="Comentarios"
+                required
+                rows="4"
+                placeholder="Escribe aquí tu mensaje..."
+                class="w-full px-4 py-2 border dark:text-white border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out min-h-[100px]"
+              ></textarea>
+            </div>
+    
+            <input type="hidden" name="_next" value="#">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Nuevo Mensaje de Contacto desde el Sitio Web">
+    
+            <div>
+              <button
+                type="submit"
+                class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              >
+                Enviar Mensaje
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+</html>
