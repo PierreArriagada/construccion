@@ -46,7 +46,7 @@
                         <a href="{% url 'productAdmin' %}" class="text-gray-700 hover:text-blue-500 dark:text-white">Administrador</a> {# <-- Puedes cambiar "Administrador" por "Dashboard", etc. #}
                     {% else %}
                         {# Si no es Admin (o no está logueado), muestra Contacto #}
-                        <a href="#" class="text-gray-700 hover:text-blue-500 dark:text-white">Contacto</a> {# <-- Si tienes URL de contacto, ponla aquí en lugar de # #}
+                        <a href="{% url 'contacto' %}" class="text-gray-700 hover:text-blue-500 dark:text-white">Contacto</a> {# <-- Si tienes URL de contacto, ponla aquí en lugar de # #}
                     {% endif %}
                 </li>
                 {# --- FIN CAMBIO --- #}
@@ -154,6 +154,48 @@
             </div>
         </nav>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    menuToggle.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+    });
+});
+
+
+$(document).ready(function() {
+    let currentItem = 0;
+    const items = $('.carousel-item');
+    const itemCount = items.length;
+
+    function switchItem() {
+        items.eq(currentItem).removeClass('active').addClass('inactive');
+
+        currentItem = (currentItem + 1) % itemCount;
+
+        items.eq(currentItem).removeClass('inactive').addClass('active');
+    }
+
+    // Iniciar el carrusel
+    let carouselInterval = setInterval(switchItem, 5000); // Cambia cada 5 segundos
+
+    // Controles (Opcional)
+    $('.carousel-control-next').click(function() {
+        clearInterval(carouselInterval);
+        switchItem();
+        carouselInterval = setInterval(switchItem, 5000);
+    });
+
+    $('.carousel-control-prev').click(function() {
+        clearInterval(carouselInterval);
+        currentItem = (currentItem - 1 + itemCount) % itemCount;
+        switchItem();
+        carouselInterval = setInterval(switchItem, 5000);
+    });
+});
+    </script>
 
     {# JS para el menú hamburguesa (Asegúrate que este archivo existe y funciona) #}
     <script src="{% static 'Java/navbar.js' %}"></script>
