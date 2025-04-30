@@ -160,6 +160,9 @@ def vendido_form(request):
 def producto_form(request):
     return render(request, 'producto_form.html')
 
+def contacto(request):
+    return render(request, 'contacto.html')
+
 
 def formUser(request):
     registro_exitoso = False
