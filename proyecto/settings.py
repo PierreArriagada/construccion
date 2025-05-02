@@ -15,6 +15,8 @@ import os
 
 # URL a la que redirige @login_required si el usuario no está logueado
 # ¡Asegúrate que apunte al nombre de TU url de login!
+ALLOWED_HOSTS = ['construccion-3lh4.onrender.com']
+
 LOGIN_URL = 'loginUser'
 
 # URL a la que redirige después de un LOGIN exitoso (si no se especifica 'next')
