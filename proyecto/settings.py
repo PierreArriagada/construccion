@@ -15,7 +15,7 @@ import os
 
 # URL a la que redirige @login_required si el usuario no está logueado
 # ¡Asegúrate que apunte al nombre de TU url de login!
-ALLOWED_HOSTS = ['construccion-3lh4.onrender.com']
+
 
 LOGIN_URL = 'loginUser'
 
@@ -48,10 +48,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-3##i+#9e^qlis_s!+*4@w7n72dzpf9rp1ozjdylr&d3@&9^(=3'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY WING: don't run with debug turned on in production!
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['construccion-3lh4.onrender.com']
 
 
 # Application definition
