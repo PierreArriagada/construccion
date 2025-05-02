@@ -18,7 +18,7 @@
                     {% if user.perfil and user.perfil.imagen %}
                         <img src="{{ user.perfil.imagen.url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover">
                     {% else %}
-                        <img src="{% static 'img/default_avatar.png' %}" alt="Avatar" class="w-8 h-8 rounded-full">
+                        <img src="{% static 'Image/default_avatar.png' %}" alt="Avatar" class="w-8 h-8 rounded-full">
                     {% endif %}
                 {% else %}
                     {# USUARIO NO LOGUEADO (MÓVIL) - Mostrar Botones #}
@@ -69,7 +69,7 @@
                      {% if user.perfil and user.perfil.imagen %}
                          <img src="{{ user.perfil.imagen.url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-gray-300 dark:border-gray-600">
                      {% else %}
-                         <img src="{% static 'img/default_avatar.png' %}" alt="Avatar" class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600">
+                         <img src="{% static 'Image/default_avatar.png' %}" alt="Avatar" class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600">
                      {% endif %}
 
                      {# Nombre y Link a Perfil #}
@@ -124,7 +124,7 @@
                                  {% if user.perfil and user.perfil.imagen %}
                                      <img src="{{ user.perfil.imagen.url }}" alt="Avatar" class="w-6 h-6 rounded-full mr-2 object-cover">
                                  {% else %}
-                                     <img src="{% static 'img/default_avatar.png' %}" alt="Avatar" class="w-6 h-6 rounded-full mr-2">
+                                     <img src="{% static 'Image/default_avatar.png' %}" alt="Avatar" class="w-6 h-6 rounded-full mr-2">
                                  {% endif %}
                                  Mi Perfil ({{ user.username }})
                             </a>
