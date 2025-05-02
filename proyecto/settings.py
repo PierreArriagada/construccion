@@ -102,16 +102,14 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',  # Indica a Django que use el backend de Oracle
-        'NAME': 'XE',                       # ¡Importante! Es el Nombre del Servicio (Service Name) de tu Pluggable Database
-        'USER': 'PRUEBADJANGO',                 # El usuario que creaste
-        'PASSWORD': '123456',  # La contraseña EXACTA que definiste para PRUEBADJANGO
-        'HOST': 'localhost',                    # O la IP/hostname donde corre tu Oracle XE si no es local
-        'PORT': '1522',                         # El puerto donde escucha el Listener de Oracle (usualmente 1521)
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.wlkuhjbpersxhfubomkd',
+        'PASSWORD': 'asPB19510',
+        'HOST': 'aws-0-us-east-2.pooler.supabase.com',
+        'PORT': '6543',
     }
-    # Puedes tener otras configuraciones de bases de datos aquí si las necesitas
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
