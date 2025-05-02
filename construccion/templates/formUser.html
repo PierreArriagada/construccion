@@ -13,16 +13,7 @@
 </head>
 <body class="bg-gray-200 dark:bg-gray-400">
     {% include 'navbar.html' %}  {# Incluye el navbar #}
-    {# --- Mostrar Mensajes --- #}
-    {% if messages %}
-        <ul class="messages mb-4 list-none p-0">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+   
 
         {% block content %}
         <section class="sombra-uniforme  bg-white dark:bg-gray-700 mt-25 mx-6 pb-3 pt-3 rounded-2xl">
@@ -32,6 +23,17 @@
                         <p> Crear nuevo usuario</p>
                     </div>
                     <div class="p-5 mt-3 ">
+
+                        {# --- Mostrar Mensajes --- #}
+                        {% if messages %}
+                            <ul class="messages mb-4 list-none p-0">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }} p-2 rounded mb-2 {% if 'error' in message.tags %}bg-red-100 text-red-700{% elif 'success' in message.tags %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}"{% endif %}>
+                                        {{ message }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                       
                         {# --- INICIO DE LA LÓGICA CONDICIONAL --- #}
                         {% if registro_exitoso %}
@@ -167,8 +169,6 @@
             
         </section>
            <div class="mt-2"></div>
-{# Incluye jQuery y tu script si aún lo necesitas para validación en tiempo real #}
-{# Asegúrate de usar la etiqueta static #}
 
 <script src="{% static 'Java/navbar.js' %}"></script>  
 <script src="{% static 'Java/valUsuarios.js' %}"></script> 
