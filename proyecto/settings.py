@@ -35,25 +35,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpeta como quieras
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+oin(BASE_DIR, 'media')
 # --- Usar Cloudinary como Almacenamiento por Defecto para Media ---
 # Esto permite que models.ImageField funcione con Cloudinary
 # --- Configuración de Cloudinary ---
 # LEE DESDE LAS VARIABLES DE ENTORNO DE RENDER
-CLOUDINARY_CLOUD_NAME = "dnuedvkia" # Tu Cloud Name real
-CLOUDINARY_API_KEY = "727868416774616" # Tu API Key real
-CLOUDINARY_API_SECRET = "ZsyQL2cXfWe6KNq_SAuzAmQJSeU" # ¡¡TU SECRETO REAL!!
+
 
 cloudinary.config(
-  cloud_name = CLOUDINARY_CLOUD_NAME,
-  api_key = CLOUDINARY_API_KEY,
-  api_secret = CLOUDINARY_API_SECRET, # Ahora usa las variables hardcoded
+  cloud_name = 'dnuedvkia',
+  api_key = '727868416774616',
+  api_secret = 'ZsyQL2cXfWe6KNq_SAuzAmQJSeU', # Ahora usa las variables hardcoded
   secure = True
 )
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.j
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
