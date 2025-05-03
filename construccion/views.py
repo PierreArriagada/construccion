@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .forms import ForgotPasswordForm, ResetPasswordForm 
-
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 import json
 

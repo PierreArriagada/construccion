@@ -11,3 +11,6 @@ urlpatterns = [
     path('vendidos/editar/<int:pk>/', views.VendidoUpdateView.as_view(), name='vendido_update'),
     path('vendidos/eliminar/<int:pk>/', views.VendidoDeleteView.as_view(), name='vendidos_delete'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
