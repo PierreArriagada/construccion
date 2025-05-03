@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import cloudinary
 import cloudinary.uploader
-import cloudinary.api
+from cloudinary.utils import cloudinary_url
 from pathlib import Path
 import os
 
@@ -38,7 +38,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpet
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# --- Usar Cloudinary como Almacenamiento por Defecto para Media ---
+# Esto permite que models.ImageField funcione con Cloudinary
+cloudinary.config( 
+    cloud_name = "dnuedvkia", 
+    api_key = "727868416774616", 
+    api_secret = "ZsyQL2cXfWe6KNq_SAuzAmQJSeU", # Click 'View API Keys' above to copy your API secret
+    secure=True
+)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
