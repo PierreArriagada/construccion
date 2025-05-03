@@ -3,8 +3,7 @@ import traceback
 from contextlib import asynccontextmanager
 from typing import List, Optional
 from uuid import uuid4
-
-import asyncpg  # <--- Importar asyncpg
+import asyncpg
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
