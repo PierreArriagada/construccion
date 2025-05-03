@@ -42,14 +42,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Esto permite que models.ImageField funcione con Cloudinary
 # --- Configuración de Cloudinary ---
 # LEE DESDE LAS VARIABLES DE ENTORNO DE RENDER
-CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET') 
+CLOUDINARY_CLOUD_NAME = "dnuedvkia" # Tu Cloud Name real
+CLOUDINARY_API_KEY = "727868416774616" # Tu API Key real
+CLOUDINARY_API_SECRET = "ZsyQL2cXfWe6KNq_SAuzAmQJSeU" # ¡¡TU SECRETO REAL!!
 
 cloudinary.config(
   cloud_name = CLOUDINARY_CLOUD_NAME,
   api_key = CLOUDINARY_API_KEY,
-  api_secret = CLOUDINARY_API_SECRET,
+  api_secret = CLOUDINARY_API_SECRET, # Ahora usa las variables hardcoded
   secure = True
 )
 

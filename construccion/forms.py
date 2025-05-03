@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django.utils import timezone
-from .models import Perfil, Rol # Asegúrate de importar tus modelos
+from .models import Perfil, Rol # importacion de modelos
 import re # Para validación regex si es necesaria
 from datetime import date
 from .models import Producto, Vendido
@@ -64,7 +64,7 @@ class RegistroForm(forms.Form):
         widget=forms.Textarea(attrs={'rows': 4, 'class': TAILWIND_TEXTAREA_CLASSES})
     )
 
-    # --- Validación (Sin cambios respecto a tu versión anterior) ---
+    # --- Validación ---
 
     def clean_nombre_usuario(self):
         username = self.cleaned_data['nombre_usuario']
@@ -111,7 +111,7 @@ class RegistroForm(forms.Form):
             raise ValidationError("Debes ser mayor de 18 años para registrarte.")
         return fecha_nacimiento
 
-    # --- Método save (Sin cambios respecto a tu versión anterior) ---
+    # --- Método save ---
     def save(self):
         user = User.objects.create_user(
             username=self.cleaned_data['nombre_usuario'],
@@ -153,7 +153,7 @@ class UserEditForm(forms.ModelForm):
         label="Correo Electrónico", required=True,
         widget=forms.EmailInput(attrs={'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-white leading-tight focus:outline-none focus:shadow-outline'})
     )
-    # Podrías añadir first_name, last_name si los usas
+    # se podria  añadir first_name, last_name 
     # first_name = forms.CharField(...)
     # last_name = forms.CharField(...)
 
@@ -163,7 +163,7 @@ class UserEditForm(forms.ModelForm):
 
 # --- Formulario para editar campos del Perfil ---
 class ProfileEditForm(forms.ModelForm):
-    # Aquí redefinimos los campos para poder añadirles widgets con estilos
+    # Aquí se define los campos para poder añadirles widgets con estilos
     # Si no los redefines, usarán los widgets por defecto.
     TAILWIND_INPUT_CLASSES = 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-600 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
     TAILWIND_TEXTAREA_CLASSES = TAILWIND_INPUT_CLASSES
