@@ -35,7 +35,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpeta como quieras
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = 'https://res.cloudinary.com/dnuedvkia/image/upload/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # --- Usar Cloudinary como Almacenamiento por Defecto para Media ---
