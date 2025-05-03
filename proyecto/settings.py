@@ -45,9 +45,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpet
 
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dnuedvkia', # Revisa tu valor real
-    'API_KEY': '727868416774616', # Revisa tu valor real
-    'API_SECRET': 'ZsyQL2cXfWe6KNq_SAuzAmQJSeU', # Revisa tu valor real
+    'CLOUD_NAME':'CLOUDINARY_CLOUD_NAME', # Revisa tu valor real
+    'API_KEY': 'CLOUDINARY_API_KEY', # Revisa tu valor real
+    'API_SECRET': 'CLOUDINARY_API_SECRET', # Revisa tu valor real
 }
 
 
@@ -124,12 +124,12 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.wlkuhjbpersxhfubomkd',
-        'PASSWORD': 'asPB19510',
-        'HOST': 'aws-0-us-east-2.pooler.supabase.com',
-        'PORT': '6543',
+        'ENGINE':'django.db.backends.postgresql', # El engine suele quedarse fijo
+        'NAME':os.environ.get('DB_NAME'),       # Lee desde .env / entorno
+        'USER':os.environ.get('DB_USER'),       # Lee desde .env / entorno
+        'PASSWORD':os.environ.get('DB_PASSWORD'), # Lee desde .env / entorno (¡Esencial!)
+        'HOST':os.environ.get('DB_HOST'),       # Lee desde .env / entorno
+        'PORT':os.environ.get('DB_PORT'),       # Lee desde .env / entorno
     }
 }
 # Password validation
