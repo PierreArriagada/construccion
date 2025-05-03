@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import cloudinary
 import cloudinary.uploader
-from cloudinary.utils import cloudinary_url
+import cloudinary.api
 from pathlib import Path
 import os
 
@@ -40,11 +40,17 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # --- Usar Cloudinary como Almacenamiento por Defecto para Media ---
 # Esto permite que models.ImageField funcione con Cloudinary
-cloudinary.config( 
-    cloud_name = "dnuedvkia", 
-    api_key = "727868416774616", 
-    api_secret = "ZsyQL2cXfWe6KNq_SAuzAmQJSeU", # Click 'View API Keys' above to copy your API secret
-    secure=True
+# --- Configuración de Cloudinary ---
+# LEE DESDE LAS VARIABLES DE ENTORNO DE RENDER
+CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
+CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
+CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET') 
+
+cloudinary.config(
+  cloud_name = CLOUDINARY_CLOUD_NAME,
+  api_key = CLOUDINARY_API_KEY,
+  api_secret = CLOUDINARY_API_SECRET,
+  secure = True
 )
 
 
