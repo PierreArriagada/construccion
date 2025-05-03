@@ -10,6 +10,7 @@ import re # Para validación regex si es necesaria
 from datetime import date
 from .models import Producto, Vendido
 from django.core.validators import RegexValidator # Importa RegexValidator
+import cloudinary
 
 
 class RegistroForm(forms.Form):

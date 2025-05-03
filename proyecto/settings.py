@@ -34,6 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpeta como quieras
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -52,7 +53,7 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MEDIA_URL = '/media/'
+
 
 
 
@@ -67,9 +68,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3##i+#9e^qlis_s!+*4@w7n72dzpf9rp1ozjdylr&d3@&9^(=3'
 
 # SECURITY WING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['construccion-3lh4.onrender.com']
+ALLOWED_HOSTS = ['construccion-3lh4.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -80,9 +81,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'cloudinary_storage',
     'cloudinary',
+    'django.contrib.staticfiles',
     'construccion',
 ]
 
