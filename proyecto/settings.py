@@ -43,12 +43,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpet
 # LEE DESDE LAS VARIABLES DE ENTORNO DE RENDER
 
 
-cloudinary.config(
-  cloud_name = 'dnuedvkia',
-  api_key = '727868416774616',
-  api_secret = 'ZsyQL2cXfWe6KNq_SAuzAmQJSeU', # 
-  secure = True
-)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnuedvkia', # Revisa tu valor real
+    'API_KEY': '727868416774616', # Revisa tu valor real
+    'API_SECRET': 'ZsyQL2cXfWe6KNq_SAuzAmQJSeU', # Revisa tu valor real
+}
 
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
