@@ -45,9 +45,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Puedes nombrar esta carpet
 
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME':'CLOUDINARY_CLOUD_NAME', # Revisa tu valor real
-    'API_KEY': 'CLOUDINARY_API_KEY', # Revisa tu valor real
-    'API_SECRET': 'CLOUDINARY_API_SECRET', # Revisa tu valor real
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'), # Lee el valor de la var. CLOUDINARY_CLOUD_NAME
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),       # Lee el valor de la var. CLOUDINARY_API_KEY
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'), # Lee el valor de la var. CLOUDINARY_API_SECRET
 }
 
 
