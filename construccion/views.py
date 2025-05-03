@@ -484,7 +484,6 @@ def vendido_create(request):
         form = VendidoForm(request.POST, request.FILES)
         if form.is_valid():
             vendido = form.save(commit=False)
-            vendido.user = request.user
             vendido.save()
             messages.success(request, '¡Vendido creado exitosamente!')
             return redirect('productAdmin')
@@ -497,7 +496,6 @@ def producto_create(request):
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             producto = form.save(commit=False)
-            producto.user = request.user
             producto.save()
             messages.success(request, '¡Producto creado exitosamente!')
             return redirect('productAdmin')
